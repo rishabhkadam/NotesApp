@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">NOTES</string>
+    <style name="TextAppearance.AppCompat.Widget.ActionBar.Title" parent="@android:style/TextAppearance">
+        <item name="android:fontFamily">@font/andika</item>
+        <item name="android:textAlignment">center</item>
+
+    </style>
+</resources>
