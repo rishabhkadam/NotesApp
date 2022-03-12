@@ -37,25 +37,36 @@ class fileAdapter(val list_of_files : ArrayList<files>,
 
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.file_name.text = list_of_files[position].file_name
         holder.file_image.setImageResource(list_of_files[position].file_image)
+
         holder.itemView.setOnClickListener{
+
             val download = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
             val fileUri = Uri.parse(list_of_files[position].url)
             val getfile = DownloadManager.Request(fileUri)
+
             getfile.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
             download.enqueue(getfile)
-            Toast.makeText(context,"Downloading...",Toast.LENGTH_LONG).show()
+
+            Toast.makeText(context, "Downloading..." + list_of_files[position].file_name, Toast.LENGTH_LONG).show()
+
+            // open file
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.setDataAndType(fileUri,"application/pdf")
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            context.startActivity(intent)
+
         }
 
-
-        var color = "#CCCCCC"
-        if(position % 2==0){
-            color = "#EEEEEE"
-        }
-        holder.container.setBackgroundColor(Color.parseColor(color))
+//        var color = "#CCCCCC"
+//        if(position % 2==0){
+//            color = "#EEEEEE"
+//        }
+//        holder.container.setCardBackgroundColor(Color.parseColor(color))
     }
+
 
     override fun getItemCount(): Int {
         return list_of_files.size
